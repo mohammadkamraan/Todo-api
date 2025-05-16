@@ -16,7 +16,7 @@ export class DatabaseConnectionService implements TypeOrmOptionsFactory {
       password: this.configService.get('DB_PASSWORD'),
       synchronize: false,
       entities: [],
-      port: this.configService.get('DB_PORT'),
+      port: Number(this.configService.get('DB_PORT')),
     };
   }
 }
