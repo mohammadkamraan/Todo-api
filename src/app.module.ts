@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseConnectionService } from '../database/databaseConnection.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -11,7 +12,8 @@ import { DatabaseConnectionService } from '../database/databaseConnection.servic
       useClass: DatabaseConnectionService,
       imports: [ConfigModule],
       inject: [ConfigService],
-    })],
+    }),
+    UserModule],
   controllers: [AppController],
   providers: [AppService, DatabaseConnectionService],
 })
