@@ -18,3 +18,7 @@ export class LoginRequest {
   @ApiProperty({ type: 'string', required: true, example: 'testPassword' })
   public password: string;
 }
+
+export class LoginResponse {
+  public token: string;
+}
