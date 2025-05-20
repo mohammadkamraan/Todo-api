@@ -6,7 +6,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseConnectionService } from '../database/databaseConnection.service';
 import { UserModule } from './user/user.module';
 import { AuthMiddleware } from './authentication/auth.middleware';
-import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -17,7 +16,6 @@ import { AuthenticationModule } from './authentication/authentication.module';
       inject: [ConfigService],
     }),
     UserModule,
-    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseConnectionService],
