@@ -1,6 +1,7 @@
-import { BeforeInsert, Column, Entity, PrimaryColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { nanoid } from 'nanoid';
+import { TodoEntity } from '../todo/todo.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -12,6 +13,9 @@ export class UserEntity {
 
   @Column({ type: 'varchar', nullable: false, length: 255 })
   public password: string;
+
+  @OneToMany(() => TodoEntity, todo => todo.user)
+  public todos: TodoEntity[];
 
   @BeforeInsert()
   private hashPassword() {
