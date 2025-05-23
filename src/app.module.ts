@@ -7,6 +7,7 @@ import { DatabaseConnectionService } from '../database/databaseConnection.servic
 import { UserModule } from './user/user.module';
 import { AuthMiddleware } from './authentication/auth.middleware';
 import { TodoModule } from './todo/todo.module';
+import { CrudService } from './shared/crud/crud.service';
 
 @Module({
   imports: [

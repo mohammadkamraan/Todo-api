@@ -2,9 +2,10 @@ import { BeforeInsert, Column, Entity, OneToMany, PrimaryColumn } from 'typeorm'
 import * as bcrypt from 'bcrypt';
 import { nanoid } from 'nanoid';
 import { TodoEntity } from '../todo/todo.entity';
+import { BaseEntity } from '../shared/models/BaseEntity';
 
 @Entity({ name: 'users' })
-export class UserEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryColumn({ type: 'varchar', length: 50, collation: 'utf8mb4_unicode_ci', generated: false })
   public id: string;
 

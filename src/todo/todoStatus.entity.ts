@@ -1,8 +1,9 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { TodoEntity } from './todo.entity';
+import { BaseEntity } from '../shared/models/BaseEntity';
 
 @Entity('TodoStatusEntity')
-export class TodoStatusEntity {
+export class TodoStatusEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
