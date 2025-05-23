@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseConnectionService } from '../database/databaseConnection.service';
 import { UserModule } from './user/user.module';
 import { AuthMiddleware } from './authentication/auth.middleware';
+import { TodoModule } from './todo/todo.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthMiddleware } from './authentication/auth.middleware';
       inject: [ConfigService],
     }),
     UserModule,
+    TodoModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseConnectionService],
