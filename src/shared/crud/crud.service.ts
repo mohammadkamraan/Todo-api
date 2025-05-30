@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
+import { ListResponse } from '../dto/ListResponse';
+import { FilterModel } from '../filters/model';
 
 @Injectable()
 export class CrudService<Entity extends { id: string | number }> {
@@ -29,5 +31,26 @@ export class CrudService<Entity extends { id: string | number }> {
       throw new NotFoundException();
     }
     return entity;
+  }
+
+  public async findAll(filters: FilterModel[]) {
+    const queryBuilder = this.getQueryBuilder();
+    for (const filter of filters) {
+      const filterQuery = filter.filter.apply(queryBuilder.alias, filter.key, filter.value);
+      queryBuilder.andWhere(filterQuery.query, filterQuery.params);
+    }
+
+    await this.appendFindQuery(queryBuilder);
+    const queryResponse = await queryBuilder.getManyAndCount();
+    const listResponse = new ListResponse<Entity>();
+    listResponse.items = queryResponse[0];
+    listResponse.totalCount = queryResponse[1];
+    return listResponse;
+  }
+
+  protected async appendFindQuery(_query: SelectQueryBuilder<Entity>) {}
+
+  private getQueryBuilder() {
+    return this.entityRepository.createQueryBuilder();
   }
 }

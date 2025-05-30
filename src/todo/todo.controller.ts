@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { TodoCreateRequestBody } from './todo.dto';
 import { TodoService } from './todo.service';
 import { TodoEntity } from './todo.entity';
 import { Auth } from '../authentication/auth.decorator';
 import { UserId } from '../user/userId.decorator';
+import { Filters } from '../shared/decorators/filters/QueryFilter';
+import { FilterModel } from '../shared/filters/model';
 
 @Auth()
 @Controller('todos')
@@ -26,6 +28,14 @@ export class TodoController {
   @Delete('delete/:todoId')
   public async delete(@Param('todoId') todoId: string) {
     return await this.todoService.delete(todoId);
+  }
+
+  @Get('/list')
+  public async getTodos(
+    @Query() query: TodoEntity,
+    @Filters(new TodoEntity()) filters: FilterModel[],
+  ) {
+    return await this.todoService.findAll(filters);
   }
 
   @Get(':todoId')

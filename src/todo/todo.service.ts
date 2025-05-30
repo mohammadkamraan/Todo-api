@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CrudService } from '../shared/crud/crud.service';
 import { TodoEntity } from './todo.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { TodoCreateRequestBody } from './todo.dto';
 
 @Injectable()
@@ -16,5 +16,10 @@ export class TodoService extends CrudService<TodoEntity> {
   public override async create(body: TodoCreateRequestBody, userId: string): Promise<TodoEntity> {
     body.user = userId;
     return await super.create(body);
+  }
+
+  protected override async appendFindQuery(query: SelectQueryBuilder<TodoEntity>): Promise<void> {
+    query.leftJoinAndSelect(`${query.alias}.user`, 'user');
+    query.leftJoinAndSelect(`${query.alias}.status`, 'status');
   }
 }
