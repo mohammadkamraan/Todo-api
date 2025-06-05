@@ -15,7 +15,8 @@ export class TodoService extends CrudService<TodoEntity> {
 
   public override async create(body: TodoCreateRequestBody, userId: string): Promise<TodoEntity> {
     body.user = userId;
-    return await super.create(body);
+    const todoEntity = await super.create(body);
+    return this.findOne(todoEntity.id);
   }
 
   protected override async appendFindQuery(query: SelectQueryBuilder<TodoEntity>): Promise<void> {
