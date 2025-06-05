@@ -26,5 +26,6 @@ export class LoginRequest {
 }
 
 export class LoginResponse {
+  @ApiProperty({ type: 'string', required: true, description: 'Generated JWT token for the user' })
   public token: string;
 }
