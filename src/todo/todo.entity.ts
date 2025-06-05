@@ -10,23 +10,26 @@ import { FindByValueFilter, FindInRange } from '../shared/filters/Filters';
 @Entity('todos')
 export class TodoEntity extends BaseEntity {
   @PrimaryColumn({ type: 'varchar', length: 50, generated: false })
-  @ApiProperty({ required: false })
+  @ApiProperty()
   @Filterable(FindByValueFilter.GetInstance())
   public id: string;
 
   @Column({ type: 'varchar', length: 50, nullable: false })
+  @ApiProperty({ type: 'string' })
   public title: string;
 
   @Column({ type: 'mediumtext', nullable: true })
+  @ApiProperty({ type: 'string' })
   public description: string | null;
 
+  @ApiProperty({ type: () => UserEntity })
   @ManyToOne(() => UserEntity, user => user.todos, { eager: true })
   public user: UserEntity;
 
-  @ApiProperty({ required: false })
   @Filterable(FindInRange.GetInstance())
   public userId: string;
 
+  @ApiProperty({ type: () => TodoStatusEntity })
   @ManyToOne(() => TodoStatusEntity, todoStatus => todoStatus.todos, { eager: true })
   public status: TodoStatusEntity;
 

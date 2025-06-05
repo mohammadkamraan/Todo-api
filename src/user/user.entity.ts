@@ -3,13 +3,16 @@ import * as bcrypt from 'bcrypt';
 import { nanoid } from 'nanoid';
 import { TodoEntity } from '../todo/todo.entity';
 import { BaseEntity } from '../shared/models/BaseEntity';
+import { ApiProperty, ApiResponseProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
+  @ApiResponseProperty({ type: 'string' })
   @PrimaryColumn({ type: 'varchar', length: 50, collation: 'utf8mb4_unicode_ci', generated: false })
   public id: string;
 
   @Column({ type: 'varchar', length: 50, unique: true, nullable: false })
+  @ApiProperty({ type: 'string', required: true })
   public username: string;
 
   @Column({ type: 'varchar', nullable: false, length: 255 })
