@@ -14,7 +14,7 @@ export class TodoCreateRequestBody {
 
   @ApiProperty({ nullable: false, required: true, example: 1, type: 'number' })
   @IsNumber()
-  public statusId: number;
+  public status: number;
 
   public user: string;
 }
